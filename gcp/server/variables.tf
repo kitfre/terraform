@@ -3,6 +3,21 @@ variable project {
   description = "GCP project for server"
 }
 
+variable disk_name {
+  type        = string
+  description = "name for persistent disk"
+}
+
+variable disk_type {
+  type        = string
+  description = "disk type for persistent disk"
+}
+
+variable disk_size {
+  type        = number
+  description = "disk size in GB"
+}
+
 variable instance_name {
   type        = string
   description = "name for the compute engine instance"

@@ -15,6 +15,15 @@ resource "google_compute_address" "ip_addr" {
   region = var.ip_addr_region
 }
 
+// A persistent disk
+resource "google_compute_disk" "default" {
+  name  = var.disk_name
+  type  = var.disk_type
+  zone  = var.zone
+  image = var.image
+  size  = var.disk_size
+}
+
 // Compute Engine instance
 resource "google_compute_instance" "default" {
   name         = "${var.instance_name}-${random_id.instance_id.hex}"
@@ -38,6 +47,16 @@ resource "google_compute_instance" "default" {
   scheduling {
     preemptible = var.preemptible
   }
+
+  lifecycle {
+    ignore_changes = [attached_disk]
+  }
+}
+
+// Attack the disk to the instance
+resource "google_compute_attached_disk" "default" {
+  disk     = google_compute_disk.default.id
+  instance = google_compute_instance.default.id
 }
 
 // Setup any firewall rules
