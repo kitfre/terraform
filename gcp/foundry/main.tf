@@ -7,7 +7,7 @@ provider "google" {
 // Setup GCS storage for state
 terraform {
   backend "gcs" {
-    bucket = "terraform-state"
+    bucket = "tf-state-kit-freddura"
     prefix = "foundry-vtt"
   }
 }
@@ -70,7 +70,7 @@ resource "google_compute_attached_disk" "default" {
 
 // Setup any firewall rules
 resource "google_compute_firewall" "default" {
-  name    = "${var.instance_name}-firewall"
+  name    = "foundry-vtt-firewall"
   network = "default"
 
   allow {
