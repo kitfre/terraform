@@ -1,6 +1,7 @@
 provider "google" {
-  project = "general-hackery"
+  project = var.project
   region  = var.zone
+  // We leave out credentials and rely instead on the default GCP auth mechanism
 }
 
 // Instance ID
@@ -32,10 +33,6 @@ resource "google_compute_instance" "default" {
       // Bind the external IP
       nat_ip = google_compute_address.ip_addr.address
     }
-  }
-
-  metadata = {
-    ssh-keys = "${var.username}:${file("~/.ssh/id_rsa.pub")}"
   }
 
   scheduling {
@@ -75,7 +72,7 @@ resource "google_dns_record_set" "CNAME" {
   name         = "www.${google_dns_managed_zone.default.dns_name}"
   type         = "CNAME"
   ttl          = 300
-  rrdatas      = ["www.beavers.app."]
+  rrdatas      = ["www.${google_dns_managed_zone.default.dns_name}"]
 }
 
 // Save the external IP to an output variable

@@ -1,3 +1,8 @@
+variable project {
+  type        = string
+  description = "GCP project for server"
+}
+
 variable instance_name {
   type        = string
   description = "name for the compute engine instance"
@@ -42,5 +47,5 @@ variable dns_zone_name {
 
 variable dns_name {
   type        = string
-  description = "name of DNS to attach to instnace"
+  description = "name of DNS to attach to instance"
 }
