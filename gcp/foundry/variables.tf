@@ -3,11 +3,6 @@ variable project {
   description = "GCP project for server"
 }
 
-variable disk_name {
-  type        = string
-  description = "name for persistent disk"
-}
-
 variable disk_type {
   type        = string
   description = "disk type for persistent disk"
@@ -16,11 +11,6 @@ variable disk_type {
 variable disk_size {
   type        = number
   description = "disk size in GB"
-}
-
-variable instance_name {
-  type        = string
-  description = "name for the compute engine instance"
 }
 
 variable zone {
@@ -41,12 +31,6 @@ variable machine_type {
 variable image {
   type        = string
   description = "boot image for the compute engine instance"
-}
-
-variable username {
-  type        = string
-  description = "host username, used for copying SSH keys across"
-  default     = "Kit.freddura"
 }
 
 variable preemptible {

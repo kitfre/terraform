@@ -4,6 +4,15 @@ provider "google" {
   // We leave out credentials and rely instead on the default GCP auth mechanism
 }
 
+// Setup GCS storage for state
+terraform {
+  backend "gcs" {
+    bucket = "terraform-state"
+    prefix = "foundry-vtt"
+  }
+}
+
+
 // Instance ID
 resource "random_id" "instance_id" {
   byte_length = 8
@@ -11,13 +20,13 @@ resource "random_id" "instance_id" {
 
 // Create a static ip
 resource "google_compute_address" "ip_addr" {
-  name   = "${var.instance_name}-addr"
+  name   = "foundry-vtt-addr"
   region = var.ip_addr_region
 }
 
 // A persistent disk
 resource "google_compute_disk" "default" {
-  name  = var.disk_name
+  name  = "foundry-vtt-disk"
   type  = var.disk_type
   zone  = var.zone
   image = var.image
@@ -26,7 +35,7 @@ resource "google_compute_disk" "default" {
 
 // Compute Engine instance
 resource "google_compute_instance" "default" {
-  name         = "${var.instance_name}-${random_id.instance_id.hex}"
+  name         = "foundry-vtt-${random_id.instance_id.hex}"
   machine_type = var.machine_type
   zone         = var.zone
 
